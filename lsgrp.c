@@ -58,7 +58,7 @@ main(int argc, char **argv)
 
   group_list(argv[1]);
   
-	kill_xcb(&conn);
+  kill_xcb(&conn);
 
   return 0;
 }
