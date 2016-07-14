@@ -24,7 +24,9 @@ atom_get(char *grp)
 {
   xcb_intern_atom_cookie_t cookie = xcb_intern_atom(conn, 1, strlen(grp), grp);
   xcb_intern_atom_reply_t *reply = xcb_intern_atom_reply(conn, cookie, NULL);
-  return reply->atom;
+  xcb_atom_t atom = reply->atom;
+  free(reply);
+  return atom;
 }
 
   void
