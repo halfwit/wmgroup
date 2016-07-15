@@ -26,6 +26,7 @@ set_group(xcb_window_t wid, char *grp)
   reply = xcb_intern_atom_reply(conn, cookie, NULL);
   
   xcb_change_property(conn, XCB_PROP_MODE_REPLACE, wid, reply->atom, XCB_ATOM_STRING, 8, strlen(grp), grp);
+  free(reply);
 }
 
 int
