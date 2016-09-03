@@ -33,12 +33,13 @@ atom_get(char *grp)
 group_list(char *grp)
 {
   xcb_window_t *wc;
-  int wn  = get_windows(conn, scrn->root, &wc); 
+  int wn = get_windows(conn, scrn->root, &wc);
   for (int i = 0; i < wn; i++) {
     xcb_get_property_cookie_t prop_c = xcb_get_property(conn, 0, wc[i], atom, XCB_ATOM_STRING, 0L, 32L);
     xcb_get_property_reply_t *prop_r = xcb_get_property_reply(conn, prop_c, NULL);
-    if(strcmp(grp, (char *) xcb_get_property_value(prop_r)) == 0)
+    if(xcb_get_property_value_length(prop_r) > 0 && strcmp(grp, (char *) xcb_get_property_value(prop_r)) == 0) {
       printf("0x%08x\n", wc[i]);
+    }
     free(prop_r);
   }
 }
