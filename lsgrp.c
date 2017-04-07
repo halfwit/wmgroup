@@ -60,7 +60,7 @@ main(int argc, char **argv) {
 	if (argc != 2) {
 		usage(argv[0]);
 	}
-	atom = atom_get("GROUP_NAME");
+	atom = atom_get("_WM_GROUP");
 	if (atom == XCB_ATOM_NONE) {
 		return 0;
 	}

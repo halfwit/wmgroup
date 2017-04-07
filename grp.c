@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <xcb/xcb.h>
+#include <xcb/xproto.h>
 #include <err.h>
 #include <string.h>
 
@@ -20,10 +21,11 @@ static void
 set_group(char *grp, xcb_window_t wid) {
 	xcb_intern_atom_cookie_t cookie;
 	xcb_intern_atom_reply_t *reply;
-	cookie = xcb_intern_atom(conn, 0, 10, "GROUP_NAME");
-	reply = xcb_intern_atom_reply(conn, cookie, NULL);
-	xcb_change_property(conn, XCB_PROP_MODE_REPLACE, wid, reply->atom, XCB_ATOM_STRING, 8, strlen(grp), grp);
-	free(reply);
+	cookie = xcb_intern_atom(conn, 0, strlen("_WM_GROUP"), "_WM_GROUP");
+	if ((reply = xcb_intern_atom_reply(conn, cookie, NULL))) {
+		xcb_change_property_checked(conn, XCB_PROP_MODE_REPLACE, wid, reply->atom, XCB_ATOM_STRING, 8, strlen(grp), grp);
+		free(reply);
+	}
 }
 
 int
