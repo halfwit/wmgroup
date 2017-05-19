@@ -33,7 +33,7 @@ void
 set_group(char *grp, xcb_window_t wid) {
 		xcb_atom_t atom = get_atom();
 		xcb_void_cookie_t cookie;
-		cookie = xcb_change_property(conn, XCB_PROP_MODE_REPLACE, wid, atom, XCB_ATOM_STRING, 8, strlen(grp), grp);
+		cookie = xcb_change_property_checked(conn, XCB_PROP_MODE_REPLACE, wid, atom, XCB_ATOM_STRING, 8, strlen(grp), grp);
 		xcb_generic_error_t *error;
 		if ((error = xcb_request_check(conn, cookie))) {
 			fprintf(stderr, "unable to set group\n");
