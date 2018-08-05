@@ -41,15 +41,12 @@ group_list(char *grp) {
 	wn = get_windows(conn, scrn->root, &wc);
 	for (int i = 0; i < wn; i++) {
 		prop_c = xcb_get_property(conn, 0, wc[i], atom, XCB_ATOM_STRING, 0L, 32L);
-		prop_r = xcb_get_property_reply(conn, prop_c, NULL);
-		if(xcb_get_property_value_length(prop_r) == 0) {
+		if ((prop_r = xcb_get_property_reply(conn, prop_c, NULL))) {
+			if (strcmp(grp, (char *) xcb_get_property_value(prop_r)) == 0) {
+				printf("0x%08x\n", wc[i]);
+			}
 			free(prop_r);
-			continue;
-		} 
-		if (strcmp(grp, (char *) xcb_get_property_value(prop_r)) == 0) {
-			printf("0x%08x\n", wc[i]);
 		}
-		free(prop_r);
 	}
 }
 

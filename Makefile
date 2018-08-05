@@ -26,7 +26,9 @@ $(OBJ): $(HDR) util.o
 
 install: $(BIN)
 	mkdir -p $(DESTDIR)$(PREFIX)/bin/
-	cp -f $(BIN) $(DESTDIR)$(PREFIX)/bin/
+	@for util in $(BIN); do \
+		cp -f $$util $(DESTDIR)$(PREFIX)/bin/; \
+	done
 
 uninstall:
 	@echo "uninstalling binaries"
